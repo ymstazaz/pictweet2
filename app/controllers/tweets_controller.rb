@@ -1,4 +1,8 @@
 class TweetsController < ApplicationController
+  before_action :set_tweet, only: [:edit, :show]
+  #    @tweet = Tweet.find(params[:id]) という既存ツィートを引っ張ってくるのをまとめる
+  #    プライベートにセットツィートが＠以下と同じであることを定義付けする。
+
   def index
     @tweets = Tweet.all
   end
@@ -13,7 +17,7 @@ class TweetsController < ApplicationController
   end
 
   def destroy
-    tweet = Tweet.find(params[:id])
+    # tweet = Tweet.find(params[:id])←けす
     # このパラムスidはURLから引っ張ってくるもの。
     # 元の記事を引用。（引っ張ってくる）のの定型分↑
     tweet.destroy
@@ -28,11 +32,11 @@ class TweetsController < ApplicationController
   end
 
   def edit
-    @tweet = Tweet.find(params[:id])
+    # @tweet = Tweet.find(params[:id])
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
+    # @tweet = Tweet.find(params[:id])
   end
 
   private # ↓プライベートメソッド（条件などの記載）
@@ -40,6 +44,9 @@ class TweetsController < ApplicationController
     params.require(:tweet).permit(:name, :image, :text)
   end
 
+  def set_tweet
+    @tweet = Tweet.find(params[:id])
+  end
   
   
 end
