@@ -14,8 +14,13 @@ class TweetsController < ApplicationController
 
   def destroy
     tweet = Tweet.find(params[:id])
+    # このパラムスidはURLから引っ張ってくるもの。
     tweet.destroy
     redirect_to root_path
+  end
+
+  def edit
+    @tweet = Tweet.find(params[:id])
   end
 
   private # ↓プライベートメソッド（条件などの記載）
