@@ -2,6 +2,9 @@ class TweetsController < ApplicationController
   before_action :set_tweet, only: [:edit, :show]
   #    @tweet = Tweet.find(params[:id]) という既存ツィートを引っ張ってくるのをまとめる
   #    プライベートにセットツィートが＠以下と同じであることを定義付けする。
+  before_action :move_to_index, except: [:index, :show]
+  # 表紙と詳細画面ではサインインしてなかったらどのURLであろうとインデックスにとぶように設定
+  # プライベートで設定。
 
   def index
     @tweets = Tweet.all
@@ -48,5 +51,10 @@ class TweetsController < ApplicationController
     @tweet = Tweet.find(params[:id])
   end
   
+  def move_to_index
+    unless user_signed_in?
+      redirect_to action: :index
+    end
+  end
   
 end
